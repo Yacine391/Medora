@@ -18,7 +18,7 @@
 - [x] P0 - Bootstrap + docs (THIS PROMPT)
 - [x] P1 - Monorepo setup (apps/web + apps/api)
 - [x] P2 - Landing page responsive
-- [ ] P3 - Datasets + synthetic data generator
+- [x] P3 - Datasets + synthetic data generator
 - [ ] P4 - AI forecasting engine
 - [ ] P5 - Impact calculator (CO2 + ecotox + €)
 - [ ] P6 - Demo dashboard (upload + results)
@@ -34,7 +34,8 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P2
-- **Next step:** P3
+- **Last completed step:** P3
+- **Next step:** P4
 - **Known issues:** none
-- **Files created this session:** apps/web/src/app/page.tsx (full landing page — Hero, Problem, How it Works, Impact, CTA, Footer)
+- **Files created this session:** apps/api/data/DATASETS.md, apps/api/data/generate_synthetic.py, apps/api/data/hospital_data.csv, apps/api/main.py (updated with /api/sample-data and /api/drugs)
+- **Dataset note:** Using synthetic data (realistic, sourced rationale in DATASETS.md). Real datasets documented but not downloaded in MVP.
