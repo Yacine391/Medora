@@ -59,11 +59,26 @@ export interface ForecastTotals {
   ecotox_score_total: number;
 }
 
+export interface Performance {
+  evaluation_months: number;
+  mae: number | null;
+  mape_pct: number | null;
+  accuracy_within_10pct: number | null;
+  accuracy_within_20pct: number | null;
+  stockout_risk_avoided: number;
+  waste_reduction_simulated_pct: number;
+  overall_grade: string;
+  confidence_label: string;
+  data_coverage_months: number;
+  caveats: string[];
+}
+
 export interface FullResult {
   hospital_id: string;
   horizon_months: number;
   totals: ForecastTotals;
   by_drug: DrugForecastAndImpact[];
+  performance?: Performance;
 }
 
 export interface ApiError {

@@ -29,6 +29,7 @@
 - [x] P10 - Demo script + 30-question jury FAQ
 - [x] P11 - Adversarial red team audit (30 hostile questions + mitigation plan)
 - [x] P12 - Hospital user guide + PDF export + glossary
+- [x] P14 - AI Performance Score: backtest metrics + grade card + SVG gauge after each forecast
 
 ## RESUME PROTOCOL
 When resuming work on Medora, ALWAYS start by:
@@ -38,8 +39,9 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P12
-- **Next step:** P13 (full redesign) or P14
+- **Last completed step:** P14
+- **Next step:** P13 (full redesign)
+- **New files (P14):** apps/web/src/components/PerformanceCard.tsx (SVG ring gauge, grade badge, waste reduction, confidence bar); updated apps/api/ml/forecaster.py (compute_backtest_metrics), apps/api/main.py (/api/performance endpoint), apps/web/src/lib/api.ts (Performance interface), apps/web/src/app/demo/page.tsx, apps/web/src/app/page.tsx (4th "Proven before you trust it" card)
 - **New files (P12):** apps/web/src/app/guide/page.tsx, apps/web/src/app/guide/layout.tsx, apps/web/src/app/guide/print.css, apps/web/src/components/Callout.tsx
 - **Known issues:** none
 - **Files created this session:** apps/api/render.yaml, apps/api/Procfile, apps/web/.env.production, DEPLOY.md, docs/PITCH_NUMBERS.md, docs/ARCHITECTURE_DECISIONS.md, docs/ROADMAP_POST_HACKATHON.md, docs/PITCH_DECK.md

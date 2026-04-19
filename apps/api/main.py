@@ -63,6 +63,12 @@ class ForecastAndImpactRequest(BaseModel):
     csv_data: str | None = None
 
 
+class PerformanceRequest(BaseModel):
+    hospital_id: str
+    drug_atc_code: str | None = None
+    csv_data: str | None = None
+
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _get_forecaster(csv_data: str | None) -> OrderForecaster:
@@ -220,9 +226,22 @@ def forecast_and_impact(req: ForecastAndImpactRequest):
     totals["euros_saved"] = round(totals["euros_saved"], 2)
     totals["ecotox_score_total"] = round(totals["ecotox_score_total"], 1)
 
+    performance = fc.compute_backtest_metrics(req.hospital_id)
+
     return {
         "hospital_id": req.hospital_id,
         "horizon_months": req.horizon_months,
         "totals": totals,
         "by_drug": by_drug,
+        "performance": performance,
     }
+
+
+# ── Performance / backtest ────────────────────────────────────────────────────
+
+@app.post("/api/performance")
+def performance(req: PerformanceRequest):
+    fc = _get_forecaster(req.csv_data)
+    if req.hospital_id not in fc._df["hospital_id"].values:
+        raise HTTPException(422, f"hospital_id '{req.hospital_id}' not found")
+    return fc.compute_backtest_metrics(req.hospital_id, req.drug_atc_code)

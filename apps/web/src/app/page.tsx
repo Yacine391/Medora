@@ -2,7 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, Brain, Target, Zap, Truck, Leaf, Euro, Lock, ShieldCheck, Eye } from "lucide-react";
+import { Upload, Brain, Target, Zap, Truck, Leaf, Euro, Lock, ShieldCheck, Eye, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
@@ -246,7 +246,7 @@ export default function Home() {
           <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
             Healthcare data is sensitive. Medora was designed around that constraint from day one.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="shadow-sm border-emerald-600/20">
               <CardContent className="pt-6 flex flex-col items-start gap-4">
                 <div className="rounded-full bg-emerald-600/10 p-3">
@@ -290,6 +290,21 @@ export default function Home() {
                     Every recommendation comes with its top 3 drivers. Your pharmacist
                     sees exactly why the AI suggests 980 units instead of 1200. No magic
                     — just data.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-sm border-emerald-600/20">
+              <CardContent className="pt-6 flex flex-col items-start gap-4">
+                <div className="rounded-full bg-emerald-600/10 p-3">
+                  <BarChart3 className="w-6 h-6 text-emerald-600" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-semibold text-base mb-2">Proven before you trust it</p>
+                  <p className="text-sm text-muted-foreground">
+                    Every time you run Medora, see exactly how accurate it would have been
+                    on your past 6 months. No blind trust — verify first, then order.
                   </p>
                 </div>
               </CardContent>

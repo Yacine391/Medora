@@ -39,6 +39,7 @@ import { toBeforeAfter, toImpactBreakdown, toMonthlyProjection } from "@/lib/cha
 import { BeforeAfterBarChart } from "@/components/charts/BeforeAfterBarChart";
 import { ImpactPieChart } from "@/components/charts/ImpactPieChart";
 import { ProjectionLineChart } from "@/components/charts/ProjectionLineChart";
+import { PerformanceCard } from "@/components/PerformanceCard";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -581,6 +582,15 @@ export default function DemoPage() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+
+            {/* PERFORMANCE CARD */}
+            {result.performance ? (
+              <PerformanceCard performance={result.performance} />
+            ) : (
+              <p className="text-xs text-muted-foreground">
+                Performance metrics not available for this analysis.
+              </p>
+            )}
 
             {/* Help link */}
             <p className="text-xs text-muted-foreground">
