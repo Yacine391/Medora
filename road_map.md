@@ -24,8 +24,8 @@
 - [x] P5.5 - Prophet → LightGBM migration, HDS/RGPD compliance section
 - [x] P6 - Demo dashboard (upload + results)
 - [x] P7 - Visualizations + before/after comparison
-- [ ] P8 - Mobile responsive polish
-- [ ] P9 - Deployment + README + demo script
+- [x] P8 - Mobile responsive polish
+- [x] P9 - Deployment + README + demo script
 
 ## RESUME PROTOCOL
 When resuming work on Medora, ALWAYS start by:
@@ -35,10 +35,13 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P7
-- **Next step:** P8
+- **Last completed step:** P9
+- **Next step:** P10 (none — pipeline complete)
 - **Known issues:** none
-- **Files created this session:** apps/web/src/components/charts/BeforeAfterBarChart.tsx, ImpactPieChart.tsx, ProjectionLineChart.tsx, apps/web/src/lib/chart-data.ts, apps/web/src/lib/projection.ts
+- **Files created this session:** apps/api/render.yaml, apps/api/Procfile, apps/web/.env.production, DEPLOY.md, docs/PITCH_NUMBERS.md, docs/ARCHITECTURE_DECISIONS.md, docs/ROADMAP_POST_HACKATHON.md, docs/PITCH_DECK.md
+- **Live URLs:** web=https://medora.vercel.app (update after deploy), api=https://medora-api.onrender.com (update after deploy)
+- **README:** pitch-ready with badges, quick-start, compliance, docs table
+- **Docs folder:** complete (4 files for jury)
 - **Dataset note:** Using synthetic data (realistic, sourced rationale in DATASETS.md). Real datasets documented but not downloaded in MVP.
 - **ML engine:** LightGBM + SHAP. Zero external API dependency. Verified by automated test.
 - **Known limitations:** LightGBM trained on 24 months synthetic data; production would need 36+ months and per-pathology tuning.

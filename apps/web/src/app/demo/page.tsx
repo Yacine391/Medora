@@ -34,6 +34,7 @@ import {
   forecastAndImpact, getSampleCSVText, isApiError,
   type FullResult, type DrugForecastAndImpact,
 } from "@/lib/api";
+import { validateResult } from "./_sanity";
 import { toBeforeAfter, toImpactBreakdown, toMonthlyProjection } from "@/lib/chart-data";
 import { BeforeAfterBarChart } from "@/components/charts/BeforeAfterBarChart";
 import { ImpactPieChart } from "@/components/charts/ImpactPieChart";
@@ -95,11 +96,11 @@ function KpiCard({
 
 // ── Skeleton loader ───────────────────────────────────────────────────────────
 
-function ResultsSkeleton() {
+function ResultsSkeleton({ firstRun }: { firstRun: boolean }) {
   return (
     <div className="space-y-6 mt-8">
       <p className="text-sm text-muted-foreground animate-pulse text-center">
-        AI analyzing your data locally…
+        {firstRun ? "Warming up the model — this takes ~5s the first time…" : "AI analysing your data locally…"}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[0, 1, 2, 3].map((i) => (
@@ -154,17 +155,36 @@ export default function DemoPage() {
   const [hospitalId, setHospitalId] = useState("HOSP_001");
   const [horizon, setHorizon]       = useState("1");
   const [loading, setLoading]       = useState(false);
+  const [warmup, setWarmup]         = useState(false);
   const [result, setResult]         = useState<FullResult | null>(null);
+  const [fromCache, setFromCache]   = useState(false);
   const [apiError, setApiError]     = useState<string | null>(null);
   const [uploadedCSV, setUploadedCSV] = useState<string | null>(null);
   const [fileName, setFileName]     = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const fileRef     = useRef<HTMLInputElement>(null);
+  const isFirstRun  = useRef(true);
+  const resultCache = useRef<Map<string, FullResult>>(new Map());
 
   async function runAnalysis(csvData?: string | null) {
+    setApiError(null);
+
+    // Return cached result instantly if available (sample data only)
+    if (!csvData) {
+      const cacheKey = `${hospitalId}|${horizon}`;
+      const cached = resultCache.current.get(cacheKey);
+      if (cached) {
+        setResult(cached);
+        setFromCache(true);
+        return;
+      }
+    }
+
+    setFromCache(false);
     setLoading(true);
     setResult(null);
-    setApiError(null);
     const start = Date.now();
+
+    const warmupTimer = setTimeout(() => setWarmup(true), 2000);
 
     const res = await forecastAndImpact({
       hospital_id: hospitalId,
@@ -172,15 +192,25 @@ export default function DemoPage() {
       csv_data: csvData ?? null,
     });
 
+    clearTimeout(warmupTimer);
+    setWarmup(false);
+    isFirstRun.current = false;
     setLoading(false);
 
     if (isApiError(res)) {
       setApiError(res.error);
       toast.error("Analysis failed — " + res.error);
     } else {
+      const warnings = validateResult(res);
+      if (warnings.length > 0) {
+        console.warn("[Medora] Result sanity warnings:", warnings);
+      }
+      if (!csvData) {
+        resultCache.current.set(`${hospitalId}|${horizon}`, res);
+      }
       setResult(res);
       const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-      toast.success(`Analysis complete in ${elapsed}s ✅`);
+      toast.success(`Analysis complete in ${elapsed}s`);
     }
   }
 
@@ -211,7 +241,7 @@ export default function DemoPage() {
     : "";
 
   return (
-    <main className="min-h-screen bg-background overflow-x-hidden">
+    <main id="main-content" className="min-h-screen bg-background overflow-x-hidden">
       {/* HEADER */}
       <div className="border-b bg-background/95 sticky top-0 z-10 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex items-center gap-4">
@@ -219,7 +249,7 @@ export default function DemoPage() {
             href="/"
             className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "gap-1")}
           >
-            <ArrowLeft className="w-4 h-4" /> Back
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Back
           </Link>
           <div className="flex-1 min-w-0">
             <h1 className="text-lg font-bold">Medora Demo</h1>
@@ -228,10 +258,17 @@ export default function DemoPage() {
             </p>
           </div>
           <Badge variant="outline" className="hidden sm:flex items-center gap-1 border-emerald-600 text-emerald-600 text-xs shrink-0">
-            <Lock className="w-3 h-3" /> No data leaves your browser
+            <Lock className="w-3 h-3" aria-hidden="true" /> No data leaves your browser
           </Badge>
         </div>
       </div>
+
+      {/* WARMUP BANNER — shows when first request to Render takes >2s */}
+      {warmup && (
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-center text-sm text-amber-800">
+          Waking up the demo server… (first request only, ~30s on free tier)
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-8">
         {/* STEP 1 */}
@@ -310,7 +347,7 @@ export default function DemoPage() {
                     className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-emerald-600/60 transition-colors"
                     onClick={() => fileRef.current?.click()}
                   >
-                    <UploadIcon className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                    <UploadIcon className="w-8 h-8 text-muted-foreground mx-auto mb-3" aria-hidden="true" />
                     {fileName ? (
                       <p className="font-medium text-emerald-700">{fileName}</p>
                     ) : (
@@ -356,7 +393,7 @@ export default function DemoPage() {
         {/* ERROR STATE */}
         {apiError && !loading && (
           <Alert variant="destructive">
-            <Terminal className="w-4 h-4" />
+            <Terminal className="w-4 h-4" aria-hidden="true" />
             <AlertTitle>API not running</AlertTitle>
             <AlertDescription>
               <p className="mb-2">{apiError}</p>
@@ -368,13 +405,20 @@ export default function DemoPage() {
         )}
 
         {/* LOADING */}
-        {loading && <ResultsSkeleton />}
+        {loading && <ResultsSkeleton firstRun={isFirstRun.current} />}
 
         {/* STEP 2 — Results */}
         {result && !loading && (
           <section className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h2 className="text-lg font-semibold">Step 2 — Results</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold">Step 2 — Results</h2>
+                {fromCache && (
+                  <Badge variant="outline" className="text-xs text-muted-foreground border-muted-foreground/40">
+                    Cached
+                  </Badge>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground">
                 This would save your hospital{" "}
                 <span className="font-semibold text-emerald-600">
@@ -496,7 +540,7 @@ export default function DemoPage() {
               <AccordionItem value="how">
                 <AccordionTrigger className="text-sm font-medium">
                   <span className="flex items-center gap-2">
-                    <Info className="w-4 h-4 text-muted-foreground" />
+                    <Info className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
                     How Medora computed this
                   </span>
                 </AccordionTrigger>

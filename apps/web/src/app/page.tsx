@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main id="main-content" className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* HERO */}
       <section className="relative flex flex-col items-center justify-center min-h-[90vh] px-4 py-20 text-center overflow-hidden">
         {/* Animated gradient background */}
@@ -168,7 +168,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center gap-4">
               <div className="rounded-full bg-emerald-600/10 p-5">
-                <Upload className="w-8 h-8 text-emerald-600" />
+                <Upload className="w-8 h-8 text-emerald-600" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-semibold text-lg mb-1">
@@ -182,7 +182,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center text-center gap-4">
               <div className="rounded-full bg-emerald-600/10 p-5">
-                <Brain className="w-8 h-8 text-emerald-600" />
+                <Brain className="w-8 h-8 text-emerald-600" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-semibold text-lg mb-1">
@@ -197,7 +197,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center text-center gap-4">
               <div className="rounded-full bg-emerald-600/10 p-5">
-                <Target className="w-8 h-8 text-emerald-600" />
+                <Target className="w-8 h-8 text-emerald-600" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-semibold text-lg mb-1">
@@ -226,7 +226,7 @@ export default function Home() {
             <Card className="shadow-sm border-emerald-600/20">
               <CardContent className="pt-6 flex flex-col items-start gap-4">
                 <div className="rounded-full bg-emerald-600/10 p-3">
-                  <Lock className="w-6 h-6 text-emerald-600" />
+                  <Lock className="w-6 h-6 text-emerald-600" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="font-semibold text-base mb-2">Your data stays yours</p>
@@ -242,7 +242,7 @@ export default function Home() {
             <Card className="shadow-sm border-emerald-600/20">
               <CardContent className="pt-6 flex flex-col items-start gap-4">
                 <div className="rounded-full bg-emerald-600/10 p-3">
-                  <ShieldCheck className="w-6 h-6 text-emerald-600" />
+                  <ShieldCheck className="w-6 h-6 text-emerald-600" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="font-semibold text-base mb-2">HDS & RGPD ready</p>
@@ -258,7 +258,7 @@ export default function Home() {
             <Card className="shadow-sm border-emerald-600/20">
               <CardContent className="pt-6 flex flex-col items-start gap-4">
                 <div className="rounded-full bg-emerald-600/10 p-3">
-                  <Eye className="w-6 h-6 text-emerald-600" />
+                  <Eye className="w-6 h-6 text-emerald-600" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="font-semibold text-base mb-2">Explainable, not a black box</p>
@@ -286,7 +286,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="shadow-sm">
               <CardContent className="pt-6 flex flex-col items-center text-center gap-3">
-                <Zap className="w-7 h-7 text-emerald-600" />
+                <Zap className="w-7 h-7 text-emerald-600" aria-hidden="true" />
                 <p className="font-semibold">Energy → CO₂</p>
                 <p className="text-sm text-muted-foreground">
                   Less CO₂ from manufacturing medicines that will never be used.
@@ -296,7 +296,7 @@ export default function Home() {
 
             <Card className="shadow-sm">
               <CardContent className="pt-6 flex flex-col items-center text-center gap-3">
-                <Truck className="w-7 h-7 text-emerald-600" />
+                <Truck className="w-7 h-7 text-emerald-600" aria-hidden="true" />
                 <p className="font-semibold">Transport → CO₂</p>
                 <p className="text-sm text-muted-foreground">
                   Less CO₂ from 10,000 km shipping of APIs from Asia that
@@ -307,7 +307,7 @@ export default function Home() {
 
             <Card className="shadow-sm">
               <CardContent className="pt-6 flex flex-col items-center text-center gap-3">
-                <Leaf className="w-7 h-7 text-emerald-600" />
+                <Leaf className="w-7 h-7 text-emerald-600" aria-hidden="true" />
                 <p className="font-semibold">Pollution</p>
                 <p className="text-sm text-muted-foreground">
                   Less ecotoxicity — protecting biodiversity, water quality and
@@ -318,7 +318,7 @@ export default function Home() {
 
             <Card className="shadow-sm">
               <CardContent className="pt-6 flex flex-col items-center text-center gap-3">
-                <Euro className="w-7 h-7 text-emerald-600" />
+                <Euro className="w-7 h-7 text-emerald-600" aria-hidden="true" />
                 <p className="font-semibold">Cost</p>
                 <p className="text-sm text-muted-foreground">
                   Direct euros saved by the hospital — reallocatable to patient

@@ -1,5 +1,6 @@
 import base64
 import io
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -13,9 +14,15 @@ from ml.impact_calculator import ImpactCalculator
 
 app = FastAPI(title="Medora API", version="0.1.0")
 
+_origins = ["http://localhost:3000"]
+_frontend_url = os.getenv("FRONTEND_URL")
+if _frontend_url:
+    _origins.append(_frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tighten in production
+    allow_origins=_origins,
+    allow_origin_regex=r"https://medora(-[a-z0-9]+)?\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
