@@ -2,7 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Upload, Brain, Target, Zap, Truck, Leaf, Euro } from "lucide-react";
+import { Upload, Brain, Target, Zap, Truck, Leaf, Euro, Lock, ShieldCheck, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
@@ -209,6 +209,67 @@ export default function Home() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BUILT FOR HOSPITAL REALITY */}
+      <section className="px-4 py-12 sm:py-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
+            Built for hospital reality
+          </h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
+            Healthcare data is sensitive. Medora was designed around that constraint from day one.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <Card className="shadow-sm border-emerald-600/20">
+              <CardContent className="pt-6 flex flex-col items-start gap-4">
+                <div className="rounded-full bg-emerald-600/10 p-3">
+                  <Lock className="w-6 h-6 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-base mb-2">Your data stays yours</p>
+                  <p className="text-sm text-muted-foreground">
+                    Medora runs on your infrastructure. Patient data, order history, waste
+                    records — none of it ever leaves your hospital. No cloud. No external
+                    API calls for predictions.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-sm border-emerald-600/20">
+              <CardContent className="pt-6 flex flex-col items-start gap-4">
+                <div className="rounded-full bg-emerald-600/10 p-3">
+                  <ShieldCheck className="w-6 h-6 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-base mb-2">HDS & RGPD ready</p>
+                  <p className="text-sm text-muted-foreground">
+                    Designed from day one for French HDS hosting and RGPD Article 9
+                    compliance. Ships as a container, runs next to your existing
+                    pharmacy software.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-sm border-emerald-600/20">
+              <CardContent className="pt-6 flex flex-col items-start gap-4">
+                <div className="rounded-full bg-emerald-600/10 p-3">
+                  <Eye className="w-6 h-6 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-base mb-2">Explainable, not a black box</p>
+                  <p className="text-sm text-muted-foreground">
+                    Every recommendation comes with its top 3 drivers. Your pharmacist
+                    sees exactly why the AI suggests 980 units instead of 1200. No magic
+                    — just data.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

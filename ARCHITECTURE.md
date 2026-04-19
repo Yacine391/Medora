@@ -1,5 +1,17 @@
 # Medora — Architecture & Technical Contract
 
+## 0. COMPLIANCE & DEPLOYMENT CONSTRAINTS
+
+- **DEPLOYMENT MODEL:** on-premise or private cloud only (HDS-certified hosting: OVH, Scaleway, AWS Santé)
+- **DATA RESIDENCY:** all hospital order history, waste data, patient visits stay inside the hospital's infrastructure
+- **NO EXTERNAL API CALLS for predictions:** the ML model runs 100% locally (LightGBM + SHAP, no cloud LLM calls)
+- **REGULATORY ALIGNMENT:**
+  - RGPD (GDPR) — Article 9 (health data), Article 32 (security)
+  - HDS (Hébergement de Données de Santé, France) — required for any hospital deployment
+  - MDR qualification — pending legal review (likely NOT a medical device since we optimize procurement, not patient treatment)
+- **MODEL ARTIFACTS:** can be shipped pre-trained OR re-trained locally per hospital
+- **TELEMETRY:** opt-in anonymized aggregate metrics only (e.g. "X tons CO2 saved across all clients") — never raw data
+
 ## 1. IMPACT DIMENSIONS
 | Axis | What we measure |
 |---|---|
@@ -18,15 +30,16 @@
 
 ## 3. FORECASTING MODEL SPEC
 
-### Input features (required)
-- Order history (last 24 months, monthly)
-- Waste history (qty expired or disposed)
-- Patient visits per month
-- Seasonality (flu season, summer low, etc.)
-- Pathology prevalence (if provided)
-- Supplier lead time
-- Safety stock policy (days of coverage)
-- Recent stockout events
+**Engine:** LightGBM (global model) + SHAP explainability. Zero external API calls.
+See `apps/api/ml/forecaster.py` for implementation.
+
+### Input features (engineered from raw CSV)
+**Temporal:** month_sin/cos, is_winter_flu_season, days_since_start
+**Demand dynamics:** qty_used lag1/2/3/6/12, rolling 3m/6m/12m mean, 3m std, trend_slope_6m
+**Waste signal:** waste_rate lag1/lag3, waste_rate_trend
+**Supply chain:** avg_lead_time_days, lead_time_std_6m, stockout_count_last_12m, days_since_last_stockout
+**Context:** patient_visits lag1/lag3, rolling 3m mean, visits-to-orders correlation, is_rural, hospital_size_bucket
+**Drug properties:** atc_class encoded, unit_cost_eur_log, cost_tier
 
 ### Output
 ```
@@ -34,7 +47,7 @@
   recommended_qty: int,
   confidence_low: int,
   confidence_high: int,
-  top_drivers: string[3],
+  top_drivers: [{feature, impact_pct, direction, explanation}] × 3,
   reasoning_text: string
 }
 ```

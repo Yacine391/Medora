@@ -21,6 +21,7 @@
 - [x] P3 - Datasets + synthetic data generator
 - [x] P4 - AI forecasting engine
 - [x] P5 - Impact calculator (CO2 + ecotox + €)
+- [x] P5.5 - Prophet → LightGBM migration, HDS/RGPD compliance section
 - [ ] P6 - Demo dashboard (upload + results)
 - [ ] P7 - Visualizations + before/after comparison
 - [ ] P8 - Mobile responsive polish
@@ -34,10 +35,11 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P5
+- **Last completed step:** P5.5
 - **Next step:** P6
 - **Known issues:** none
-- **Files created this session:** apps/api/ml/impact_constants.py, apps/api/ml/impact_calculator.py, apps/api/main.py (updated with /api/impact, /api/impact-batch, /api/forecast-and-impact)
+- **Files modified this session:** apps/api/ml/forecaster.py (Prophet→LightGBM+SHAP), apps/api/tests/test_forecaster.py (4 tests), apps/api/requirements.txt, ARCHITECTURE.md (compliance section), apps/web/src/app/page.tsx (new section)
 - **Dataset note:** Using synthetic data (realistic, sourced rationale in DATASETS.md). Real datasets documented but not downloaded in MVP.
-- **Known limitations:** Prophet model trained on 24 months synthetic data; production would need 36+ months and per-pathology tuning.
+- **ML engine:** LightGBM + SHAP. Zero external API dependency. Verified by automated test.
+- **Known limitations:** LightGBM trained on 24 months synthetic data; production would need 36+ months and per-pathology tuning.
 - **Impact constants source of truth:** apps/api/ml/impact_constants.py (do not duplicate in ARCHITECTURE.md)
