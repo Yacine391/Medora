@@ -34,6 +34,10 @@ import {
   forecastAndImpact, getSampleCSVText, isApiError,
   type FullResult, type DrugForecastAndImpact,
 } from "@/lib/api";
+import { toBeforeAfter, toImpactBreakdown, toMonthlyProjection } from "@/lib/chart-data";
+import { BeforeAfterBarChart } from "@/components/charts/BeforeAfterBarChart";
+import { ImpactPieChart } from "@/components/charts/ImpactPieChart";
+import { ProjectionLineChart } from "@/components/charts/ProjectionLineChart";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -419,6 +423,50 @@ export default function DemoPage() {
                 color="text-orange-600"
               />
             </div>
+
+            {/* VISUAL IMPACT — 3 charts */}
+            {sortedDrugs.length > 0 && (() => {
+              const beforeAfterData = toBeforeAfter(result.by_drug);
+              const impactBreakdown = toImpactBreakdown(result.by_drug);
+              const projectionData  = toMonthlyProjection(result.totals, result.by_drug, Number(horizon));
+              return (
+                <div className="space-y-4">
+                  {/* Row 1 — Before/After (full width) */}
+                  <Card className="shadow-sm">
+                    <CardContent className="pt-5 pb-4">
+                      <p className="text-sm font-semibold mb-1">Orders: current vs recommended</p>
+                      <p className="text-xs text-muted-foreground mb-4">
+                        Your current orders vs Medora&apos;s recommendation per drug.
+                      </p>
+                      <BeforeAfterBarChart data={beforeAfterData} />
+                    </CardContent>
+                  </Card>
+
+                  {/* Row 2 — Pie + Projection */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Card className="shadow-sm">
+                      <CardContent className="pt-5 pb-4">
+                        <p className="text-sm font-semibold mb-1">CO₂ savings breakdown</p>
+                        <p className="text-xs text-muted-foreground mb-4">
+                          Where the CO₂ savings come from (manufacturing is the main lever).
+                        </p>
+                        <ImpactPieChart data={impactBreakdown} totalCo2={result.totals.co2_total_kg} />
+                      </CardContent>
+                    </Card>
+
+                    <Card className="shadow-sm">
+                      <CardContent className="pt-5 pb-4">
+                        <p className="text-sm font-semibold mb-1">Cumulative euro savings</p>
+                        <p className="text-xs text-muted-foreground mb-4">
+                          Projected savings over 12 months following Medora&apos;s recommendations.
+                        </p>
+                        <ProjectionLineChart data={projectionData} />
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* PER-DRUG TABLE */}
             <div className="overflow-x-auto rounded-xl border">

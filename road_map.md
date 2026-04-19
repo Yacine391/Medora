@@ -23,7 +23,7 @@
 - [x] P5 - Impact calculator (CO2 + ecotox + €)
 - [x] P5.5 - Prophet → LightGBM migration, HDS/RGPD compliance section
 - [x] P6 - Demo dashboard (upload + results)
-- [ ] P7 - Visualizations + before/after comparison
+- [x] P7 - Visualizations + before/after comparison
 - [ ] P8 - Mobile responsive polish
 - [ ] P9 - Deployment + README + demo script
 
@@ -35,10 +35,10 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P6
-- **Next step:** P7
+- **Last completed step:** P7
+- **Next step:** P8
 - **Known issues:** none
-- **Files created this session:** apps/web/src/app/demo/page.tsx, apps/web/src/lib/api.ts, apps/web/.env.local, apps/web/.env.example, apps/web/src/app/layout.tsx (Toaster added)
+- **Files created this session:** apps/web/src/components/charts/BeforeAfterBarChart.tsx, ImpactPieChart.tsx, ProjectionLineChart.tsx, apps/web/src/lib/chart-data.ts, apps/web/src/lib/projection.ts
 - **Dataset note:** Using synthetic data (realistic, sourced rationale in DATASETS.md). Real datasets documented but not downloaded in MVP.
 - **ML engine:** LightGBM + SHAP. Zero external API dependency. Verified by automated test.
 - **Known limitations:** LightGBM trained on 24 months synthetic data; production would need 36+ months and per-pathology tuning.
