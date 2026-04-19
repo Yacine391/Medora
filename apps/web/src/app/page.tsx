@@ -8,6 +8,24 @@ import { cn } from "@/lib/utils";
 export default function Home() {
   return (
     <main id="main-content" className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* TOP NAV */}
+      <nav className="border-b bg-background/95 backdrop-blur sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between">
+          <span className="font-bold text-emerald-600 text-sm">Medora</span>
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="/guide" className="text-muted-foreground hover:text-foreground transition-colors">
+              User Guide
+            </Link>
+            <Link
+              href="/demo"
+              className={cn(buttonVariants({ size: "sm" }), "bg-emerald-600 hover:bg-emerald-700 text-white")}
+            >
+              Try the demo
+            </Link>
+          </div>
+        </div>
+      </nav>
+
       {/* HERO */}
       <section className="relative flex flex-col items-center justify-center min-h-[90vh] px-4 py-20 text-center overflow-hidden">
         {/* Animated gradient background */}
@@ -210,6 +228,12 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <p className="text-center mt-10 text-sm text-muted-foreground">
+            Want more detail?{" "}
+            <Link href="/guide" className="text-emerald-600 hover:underline font-medium">
+              Read the user guide →
+            </Link>
+          </p>
         </div>
       </section>
 

@@ -1,0 +1,100 @@
+@media print {
+  /* Hide interactive elements */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Remove all backgrounds and shadows */
+  *,
+  *::before,
+  *::after {
+    background: white !important;
+    background-color: white !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    color: black !important;
+    border-color: #d1d5db !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 2cm 2.5cm;
+    size: A4;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.6;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  h1 { font-size: 20pt; margin-bottom: 6pt; }
+  h2 { font-size: 15pt; margin-top: 18pt; margin-bottom: 6pt; }
+  h3 { font-size: 12pt; margin-top: 12pt; margin-bottom: 4pt; }
+
+  /* Keep headings with their content */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Page breaks before major sections */
+  .print-section {
+    page-break-before: always;
+  }
+  .print-section:first-of-type {
+    page-break-before: auto;
+  }
+
+  /* Hide TOC sidebar (it's for screen navigation) */
+  aside,
+  nav[aria-label="Table of contents"] {
+    display: none !important;
+  }
+
+  /* Full-width content when sidebar is hidden */
+  .guide-layout {
+    display: block !important;
+  }
+  .guide-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Don't expand truncated text */
+  a[href]::after {
+    content: none;
+  }
+
+  /* Screenshot placeholders: keep visible but minimal */
+  .screenshot-placeholder {
+    border: 1px solid #9ca3af !important;
+    padding: 8pt;
+    text-align: center;
+    font-style: italic;
+    font-size: 9pt;
+    color: #6b7280 !important;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 10pt;
+  }
+  th, td {
+    border: 1px solid #9ca3af !important;
+    padding: 4pt 6pt;
+    text-align: left;
+  }
+  thead {
+    background-color: #f3f4f6 !important;
+  }
+
+  /* Avoid orphans/widows */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}

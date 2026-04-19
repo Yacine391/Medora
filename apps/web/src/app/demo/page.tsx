@@ -5,7 +5,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import {
   ArrowLeft, Lock, Terminal, TrendingDown, Leaf, Euro,
-  Package, AlertTriangle, Upload as UploadIcon, Info,
+  Package, AlertTriangle, Upload as UploadIcon, Info, HelpCircle,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -273,7 +273,17 @@ export default function DemoPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-8">
         {/* STEP 1 */}
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold">Step 1 — Choose your data source</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Step 1 — Choose your data source</h2>
+            <Link
+              href="/guide"
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Open user guide"
+            >
+              <HelpCircle className="w-4 h-4" aria-hidden="true" />
+              <span className="hidden sm:inline">User Guide</span>
+            </Link>
+          </div>
 
           <Tabs defaultValue="sample" className="w-full">
             <TabsList className="w-full sm:w-auto">
@@ -571,6 +581,14 @@ export default function DemoPage() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+
+            {/* Help link */}
+            <p className="text-xs text-muted-foreground">
+              Need help interpreting the results?{" "}
+              <Link href="/guide#results" className="text-emerald-600 hover:underline">
+                Read the user guide →
+              </Link>
+            </p>
 
             {/* Ecotox legend inline */}
             <div className="flex flex-wrap gap-2 text-xs items-center text-muted-foreground">

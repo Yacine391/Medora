@@ -28,6 +28,7 @@
 - [x] P9 - Deployment + README + demo script
 - [x] P10 - Demo script + 30-question jury FAQ
 - [x] P11 - Adversarial red team audit (30 hostile questions + mitigation plan)
+- [x] P12 - Hospital user guide + PDF export + glossary
 
 ## RESUME PROTOCOL
 When resuming work on Medora, ALWAYS start by:
@@ -37,8 +38,9 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P11
-- **Next step:** none — project complete. Ready for hackathon presentation.
+- **Last completed step:** P12
+- **Next step:** P13 (full redesign) or P14
+- **New files (P12):** apps/web/src/app/guide/page.tsx, apps/web/src/app/guide/layout.tsx, apps/web/src/app/guide/print.css, apps/web/src/components/Callout.tsx
 - **Known issues:** none
 - **Files created this session:** apps/api/render.yaml, apps/api/Procfile, apps/web/.env.production, DEPLOY.md, docs/PITCH_NUMBERS.md, docs/ARCHITECTURE_DECISIONS.md, docs/ROADMAP_POST_HACKATHON.md, docs/PITCH_DECK.md
 - **Live URLs:** web=https://medora.vercel.app (update after deploy), api=https://medora-api.onrender.com (update after deploy)
