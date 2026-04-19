@@ -19,7 +19,7 @@
 - [x] P1 - Monorepo setup (apps/web + apps/api)
 - [x] P2 - Landing page responsive
 - [x] P3 - Datasets + synthetic data generator
-- [ ] P4 - AI forecasting engine
+- [x] P4 - AI forecasting engine
 - [ ] P5 - Impact calculator (CO2 + ecotox + €)
 - [ ] P6 - Demo dashboard (upload + results)
 - [ ] P7 - Visualizations + before/after comparison
@@ -34,8 +34,9 @@ When resuming work on Medora, ALWAYS start by:
 4. Continuing from there. Never restart from P0.
 
 ## CURRENT STATE
-- **Last completed step:** P3
-- **Next step:** P4
+- **Last completed step:** P4
+- **Next step:** P5
 - **Known issues:** none
-- **Files created this session:** apps/api/data/DATASETS.md, apps/api/data/generate_synthetic.py, apps/api/data/hospital_data.csv, apps/api/main.py (updated with /api/sample-data and /api/drugs)
+- **Files created this session:** apps/api/ml/forecaster.py, apps/api/tests/test_forecaster.py, apps/api/main.py (updated with /api/forecast and /api/forecast-batch)
 - **Dataset note:** Using synthetic data (realistic, sourced rationale in DATASETS.md). Real datasets documented but not downloaded in MVP.
+- **Known limitations:** Prophet model trained on 24 months synthetic data; production would need 36+ months and per-pathology tuning.
